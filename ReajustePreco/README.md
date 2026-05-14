@@ -32,7 +32,13 @@ Recebe um salário digitado pelo usuário e calcula quantos salários mínimos e
 
 ## Reajustador de Preços
 
-Recebe o valor de um produto e aplica um reajuste percentual utilizando uma barra deslizante.
+Recebe o preço de um produto e aplica um reajuste percentual definido pelo usuário usando uma barra deslizante.
 
 - `index.php` — formulário, cálculo do reajuste e exibição do resultado
 - `style.css` — estilização da interface
+
+---
+
+## Autor
+
+Gabriel Gomes de Queiroz

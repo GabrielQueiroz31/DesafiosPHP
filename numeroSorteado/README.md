@@ -1,21 +1,22 @@
-# Sorteador de Números + Mega-Sena
+# Reajustador de Preços
 
-> Aplicação PHP simples que sorteia um número aleatório e gera um jogo completo da Mega-Sena.
+> Aplicação PHP simples que calcula o novo valor de um produto após aplicar um reajuste percentual.
 
 ---
 
 ## Funcionalidades
 
-- **Sorteio simples** — número aleatório entre 1 e 100
-- **Mega-Sena** — 6 números únicos entre 1 e 60, ordenados e formatados (`01-02-03-04-05-06`)
-- **Novo sorteio** — botão que recarrega a página via POST e gera novos números
+- **Preço do produto** — usuário informa o valor do produto
+- **Reajuste percentual** — ajuste usando uma barra deslizante (`range`)
+- **Atualização em tempo real** — mostra a porcentagem enquanto a barra é movida
+- **Resultado formatado** — exibe os valores em Real Brasileiro (`R$`)
 
 ---
 
 ## Estrutura
 
-```
-sorteador/
+```bash
+reajustador/
 ├── index.php     # Lógica PHP + estrutura HTML
 ├── style.css     # Estilos da aplicação
 └── README.md     # Este arquivo
@@ -25,55 +26,60 @@ sorteador/
 
 ## Como funciona
 
-### Sorteio simples
+### Captura do valor do produto
 
 ```php
-$numero = mt_rand(1, 100);
+$preco = floatval($_POST['preco']);
 ```
 
-Gera um número inteiro aleatório entre 1 e 100 usando o algoritmo Mersenne Twister.
+Recebe o valor digitado pelo usuário e converte para número decimal.
 
-### Mega-Sena
+### Captura da porcentagem
 
 ```php
-$numeros = [];
-
-while (count($numeros) < 6) {
-    $sorteio = mt_rand(1, 60);
-    if (!in_array($sorteio, $numeros)) {
-        $numeros[] = $sorteio;
-    }
-}
-
-sort($numeros);
+$percentual = $_POST['percentual'] ?? 15;
 ```
 
-1. Sorteia um número entre 1 e 60
-2. Verifica se já foi sorteado com `in_array()` — garante que não haja repetição
-3. Repete até ter 6 números únicos
-4. Ordena com `sort()`
-5. Formata com `str_pad()` para sempre exibir dois dígitos (`01`, `02`...)
+Recebe a porcentagem selecionada na barra de reajuste.  
+Caso nenhum valor seja enviado, utiliza `15%` como padrão.
 
-### Novo sorteio
+### Cálculo do reajuste
 
-O formulário faz `POST` para a mesma página. Como o PHP executa `mt_rand()` a cada carregamento, novos números são gerados automaticamente.
+```php
+$novoPreco = $preco + ($preco * $percentual / 100);
+```
+
+1. Calcula o percentual do reajuste
+2. Soma ao valor original do produto
+3. Gera o novo preço final
+
+### Atualização da porcentagem em tempo real
+
+```html
+oninput="valorPercentual.innerText = this.value + '%'"
+```
+
+Atualiza a porcentagem exibida na tela enquanto o usuário move a barra.
 
 ---
 
 ## Personalização
 
-### Alterar o range do sorteio simples
+### Alterar porcentagem inicial
 
 ```php
-$numero = mt_rand(1, 100); // altere os parâmetros
+$percentual = $_POST['percentual'] ?? 15;
 ```
 
-### Alterar a quantidade de números da Mega-Sena
+Troque o `15` pelo valor desejado.
 
-```php
-while (count($numeros) < 6) // altere o 6
-    $sorteio = mt_rand(1, 60); // altere o range máximo
+### Alterar limite máximo da barra
+
+```html
+<input type="range" min="0" max="100">
 ```
+
+Altere o valor de `max`.
 
 ---
 
