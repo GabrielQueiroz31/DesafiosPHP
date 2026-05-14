@@ -8,23 +8,24 @@
     <link rel="stylesheet" href="css/processar.css">
 </head>
 <body>
+    <form action="index.php" method="post">
+        <div class="card">
+            <?php 
 
-    <div class="card">
+            $numero = $_POST['numero'];
+            $antecessor = $numero - 1;
+            $sucessor = $numero + 1;
 
-        <?php 
+            echo "<h2>Resultado:</h2>";
+            echo "<p>O número digitado foi: <strong>$numero</strong></p>";
+            echo "<p>O seu antecessor é: $antecessor</p>";
+            echo "<p>O seu sucessor é: $sucessor</p>";
 
-        $numero = $_POST['numero'];
-        $antecessor = $numero - 1;
-        $sucessor = $numero + 1;
+            ?>
 
-        echo "<h2>Resultado:</h2>";
-        echo "<p>O número digitado foi: <strong>$numero</strong></p>";
-        echo "<p>O seu antecessor é: $antecessor</p>";
-        echo "<p>O seu sucessor é: $sucessor</p>";
-
-        ?>
-
-    </div>
+            <button>Voltar</button>
+        </div>
+    </form>
 
 </body>
 </html>
